@@ -2,18 +2,27 @@ from datetime import datetime, timezone
 
 from .models import Finding
 
-SEVERITY_ORDER = {"critical": 0, "high": 1, "medium": 2, "low": 3, "info": 4, "unknown": 5}
+SEVERITY_ORDER = {
+    "critical": 0,
+    "high": 1,
+    "medium": 2,
+    "low": 3,
+    "info": 4,
+    "information": 4,
+    "bestpractice": 5,
+    "unknown": 6,
+}
 
 
 def build_report(target_url: str, findings: list[Finding]) -> str:
-    findings_sorted = sorted(findings, key=lambda f: SEVERITY_ORDER.get(f.severity, 5))
-    nikto_count = sum(1 for f in findings_sorted if f.source == "nikto")
+    findings_sorted = sorted(findings, key=lambda f: SEVERITY_ORDER.get(f.severity, 6))
+    invicti_count = sum(1 for f in findings_sorted if f.source == "invicti")
     burp_count = sum(1 for f in findings_sorted if f.source == "burp")
 
     lines = [
         f"# VAPT Report — {target_url}",
         f"\nGenerated: {datetime.now(timezone.utc).isoformat()}",
-        f"\nTotal findings: {len(findings_sorted)} (Nikto: {nikto_count}, Burp Suite: {burp_count})",
+        f"\nTotal findings: {len(findings_sorted)} (Invicti: {invicti_count}, Burp Suite: {burp_count})",
         "\n## Summary\n",
         "| # | Source | Severity | Name | URL |",
         "|---|--------|----------|------|-----|",

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Invisible Journal — A calmer page for the ADHD mind</title>
+  <meta name="description" content="The Invisible Journal is a gentle, guided notebook that helps the ADHD mind declutter, focus, and finally feel on top of things — without the guilt of another blank page." />
+
+  <!-- ============================================================
+       HOW TO USE ON SHOPIFY
+       1. Shopify Admin → Online Store → Pages → Add page
+       2. Click the "< >" (Show HTML) button in the editor toolbar
+       3. Paste everything INSIDE the <body> tag below (the markup),
+          then paste the <style> block into your theme, OR keep this
+          whole file as a standalone landing page.
+       Note: colors, copy, and the buy link (#shop) are easy to edit.
+       ============================================================ -->
+
+  <style>
+    :root {
+      --cream:      #f7f3ec;
+      --cream-2:    #efe7da;
+      --ink:        #2f2b28;
+      --ink-soft:   #5c554e;
+      --sage:       #8ba888;
+      --sage-deep:  #5f7d5e;
+      --clay:       #d99873;
+      --clay-deep:  #c67c54;
+      --card:       #fffdf9;
+      --line:       #e3d9c8;
+      --radius:     18px;
+      --shadow:     0 10px 30px rgba(60, 50, 40, 0.08);
+      --font:       "Georgia", "Times New Roman", serif;
+      --sans:       -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 { font-family: var(--font); font-weight: 400; line-height: 1.2; margin: 0 0 .4em; }
+    p { margin: 0 0 1em; color: var(--ink-soft); }
+    a { color: var(--clay-deep); text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    .btn {
+      display: inline-block;
+      background: var(--clay-deep);
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 1.02rem;
+      letter-spacing: .2px;
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+      box-shadow: 0 6px 16px rgba(198, 124, 84, 0.28);
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-2px); background: var(--clay); box-shadow: 0 10px 22px rgba(198, 124, 84, 0.34); }
+    .btn.ghost {
+      background: transparent;
+      color: var(--sage-deep);
+      box-shadow: none;
+      border: 1.5px solid var(--sage);
+    }
+    .btn.ghost:hover { background: var(--sage); color: #fff; }
+
+    /* ---------- Nav ---------- */
+    header.nav {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(247, 243, 236, 0.86);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; max-width: 1080px; margin: 0 auto; }
+    .logo { font-family: var(--font); font-size: 1.3rem; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+    .logo-dot { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--sage), var(--clay)); display: inline-block; }
+    .nav-links { display: flex; gap: 26px; align-items: center; }
+    .nav-links a { color: var(--ink-soft); font-size: .95rem; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links .btn { padding: 10px 22px; color: #fff; }
+    @media (max-width: 720px){ .nav-links a:not(.btn){ display:none; } }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 84px 0 72px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(closest-side, rgba(139,168,136,.18), transparent 70%) -10% -20% / 55% 55% no-repeat,
+        radial-gradient(closest-side, rgba(217,152,115,.18), transparent 70%) 110% 10% / 55% 55% no-repeat;
+      pointer-events: none;
+    }
+    .hero .wrap { position: relative; }
+    .eyebrow {
+      display: inline-block; font-size: .82rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--sage-deep); background: var(--cream-2); padding: 7px 16px; border-radius: 999px; margin-bottom: 22px;
+    }
+    .hero h1 { font-size: clamp(2.2rem, 5.2vw, 3.6rem); max-width: 16ch; margin-inline: auto; }
+    .hero .lede { font-size: 1.18rem; max-width: 52ch; margin: 18px auto 30px; }
+    .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .reassure { margin-top: 20px; font-size: .9rem; color: var(--ink-soft); }
+    .reassure span { white-space: nowrap; }
+
+    /* ---------- Empathy / problem ---------- */
+    .section { padding: 74px 0; }
+    .section.tint { background: var(--cream-2); }
+    .center { text-align: center; }
+    .kicker { color: var(--clay-deep); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; font-size: .8rem; margin-bottom: 10px; }
+    h2.big { font-size: clamp(1.8rem, 4vw, 2.6rem); max-width: 20ch; }
+    .center h2.big { margin-inline: auto; }
+    .sub { max-width: 56ch; margin: 8px auto 0; font-size: 1.08rem; }
+
+    .grid { display: grid; gap: 22px; margin-top: 46px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 820px){ .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 30px 26px; box-shadow: var(--shadow);
+    }
+    .card .ic { font-size: 1.7rem; margin-bottom: 12px; }
+    .card h3 { font-size: 1.25rem; }
+    .card p { margin-bottom: 0; }
+
+    /* Feeling list */
+    .feelings { max-width: 640px; margin: 40px auto 0; }
+    .feel {
+      display: flex; gap: 14px; align-items: flex-start; padding: 16px 20px;
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 12px;
+    }
+    .feel .x { color: var(--clay-deep); font-weight: 700; font-size: 1.1rem; line-height: 1.5; }
+    .feel p { margin: 0; color: var(--ink); }
+
+    /* ---------- How it works ---------- */
+    .steps { counter-reset: step; margin-top: 46px; }
+    .step { display: flex; gap: 22px; align-items: flex-start; padding: 22px 0; border-bottom: 1px dashed var(--line); }
+    .step:last-child { border-bottom: none; }
+    .step .num {
+      counter-increment: step; flex: 0 0 auto;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--sage); color: #fff; font-family: var(--font); font-size: 1.3rem;
+      display: grid; place-items: center;
+    }
+    .step .num::before { content: counter(step); }
+    .step h3 { font-size: 1.25rem; margin-bottom: 4px; }
+    .step p { margin: 0; }
+
+    /* ---------- Product / buy ---------- */
+    .product { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    @media (max-width: 820px){ .product { grid-template-columns: 1fr; } }
+    .product-visual {
+      aspect-ratio: 4/5; border-radius: var(--radius); box-shadow: var(--shadow);
+      background:
+        linear-gradient(150deg, var(--sage) 0%, var(--sage-deep) 55%, var(--clay) 130%);
+      position: relative; overflow: hidden; display: grid; place-items: center; color: #fff;
+    }
+    .product-visual .bookmark {
+      font-family: var(--font); text-align: center; padding: 24px;
+    }
+    .product-visual .bookmark small { display:block; letter-spacing: 3px; text-transform: uppercase; font-size: .7rem; opacity: .85; margin-bottom: 10px; }
+    .product-visual .bookmark span { font-size: 2rem; display:block; }
+    .price-row { display: flex; align-items: baseline; gap: 12px; margin: 4px 0 18px; }
+    .price { font-family: var(--font); font-size: 2.4rem; color: var(--ink); }
+    .price-old { color: var(--ink-soft); text-decoration: line-through; font-size: 1.1rem; }
+    .price-tag { background: var(--sage); color:#fff; font-size:.78rem; padding: 4px 10px; border-radius: 999px; font-weight:600; }
+    .checklist { list-style: none; padding: 0; margin: 0 0 26px; }
+    .checklist li { padding: 7px 0 7px 30px; position: relative; color: var(--ink); }
+    .checklist li::before { content: "✓"; position: absolute; left: 0; color: var(--sage-deep); font-weight: 700; }
+    .stars { color: var(--clay); letter-spacing: 2px; margin-bottom: 6px; }
+
+    /* ---------- Testimonials ---------- */
+    .quote { font-family: var(--font); font-size: 1.15rem; color: var(--ink); font-style: italic; }
+    .who { margin-top: 14px; font-size: .92rem; color: var(--ink-soft); font-style: normal; }
+    .who strong { color: var(--ink); font-style: normal; }
+
+    /* ---------- FAQ ---------- */
+    .faq { max-width: 760px; margin: 40px auto 0; }
+    details {
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+      padding: 4px 22px; margin-bottom: 12px;
+    }
+    details summary {
+      cursor: pointer; list-style: none; padding: 18px 0; font-weight: 600; color: var(--ink);
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::after { content: "+"; color: var(--clay-deep); font-size: 1.4rem; transition: transform .2s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { padding-bottom: 18px; margin: 0; }
+
+    /* ---------- CTA banner ---------- */
+    .cta-band {
+      margin: 0 auto; text-align: center;
+      background: linear-gradient(135deg, var(--sage-deep), var(--sage));
+      color: #fff; border-radius: 26px; padding: 60px 30px;
+    }
+    .cta-band h2 { color: #fff; font-size: clamp(1.8rem, 4vw, 2.6rem); }
+    .cta-band p { color: rgba(255,255,255,.9); max-width: 46ch; margin: 0 auto 26px; }
+    .cta-band .btn { background: #fff; color: var(--sage-deep); }
+    .cta-band .btn:hover { background: var(--cream); }
+
+    /* ---------- Footer ---------- */
+    footer { padding: 46px 0; border-top: 1px solid var(--line); text-align: center; }
+    footer .logo { justify-content: center; margin-bottom: 12px; }
+    footer p { font-size: .88rem; margin-bottom: 6px; }
+    .foot-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+    .foot-links a { color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="logo"><span class="logo-dot"></span> The Invisible Journal</div>
+      <nav class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="#shop" class="btn">Get yours</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Made for the ADHD mind</span>
+      <h1>Quiet the mental clutter. One gentle page at a time.</h1>
+      <p class="lede">The Invisible Journal is a guided notebook designed for brains that race, wander, and forget — so you can offload the noise, find your focus, and finally feel on top of your day. No guilt. No blank-page dread.</p>
+      <div class="hero-cta">
+        <a href="#shop" class="btn">Start decluttering your mind</a>
+        <a href="#how" class="btn ghost">See how it works</a>
+      </div>
+      <p class="reassure">
+        <span>★★★★★ Loved by 2,000+ busy minds</span> &nbsp;·&nbsp;
+        <span>30-day calm-or-refund promise</span> &nbsp;·&nbsp;
+        <span>Ships worldwide</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== EMPATHY ===================== -->
+  <section class="section tint">
+    <div class="wrap center">
+      <div class="kicker">Sound familiar?</div>
+      <h2 class="big">Your mind is full — but not with the things you want.</h2>
+      <p class="sub">Most journals are built for tidy, linear thinkers. The Invisible Journal is built for the rest of us.</p>
+
+      <div class="feelings">
+        <div class="feel"><span class="x">✕</span><p>Twelve tabs open in your head, and you can't close a single one.</p></div>
+        <div class="feel"><span class="x">✕</span><p>You buy the beautiful planner… and abandon it by page three.</p></div>
+        <div class="feel"><span class="x">✕</span><p>Everything feels urgent, so nothing actually gets done.</p></div>
+        <div class="feel"><span class="x">✕</span><p>The to-do list lives in your head, and it never lets you rest.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHAT IT IS ===================== -->
+  <section class="section">
+    <div class="wrap center">
+      <div class="kicker">The idea</div>
+      <h2 class="big">A place to put the noise, so your head doesn't have to hold it.</h2>
+      <p class="sub">We call it <em>invisible</em> because that's how it feels — the mental weight disappears onto the page, and what's left is a calmer, clearer you.</p>
+
+      <div class="grid cols-3">
+        <div class="card">
+          <div class="ic">🧠</div>
+          <h3>Brain dump, structured</h3>
+          <p>Guided prompts catch the swirl of thoughts and sort them into "now," "later," and "let it go" — in seconds, not stress.</p>
+        </div>
+        <div class="card">
+          <div class="ic">🎯</div>
+          <h3>One focus a day</h3>
+          <p>Instead of a 30-item list, you choose the single thing that matters most. Progress you can actually feel.</p>
+        </div>
+        <div class="card">
+          <div class="ic">🌿</div>
+          <h3>Declutter, gently</h3>
+          <p>Weekly reset pages help you clear physical and mental clutter without the overwhelm of "organize everything at once."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section class="section tint" id="how">
+    <div class="wrap">
+      <div class="center">
+        <div class="kicker">How it works</div>
+        <h2 class="big">Five minutes. That's the whole commitment.</h2>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="num"></div>
+          <div>
+            <h3>Empty your head</h3>
+            <p>Open to today's page and dump everything that's rattling around — tasks, worries, half-ideas. No order required.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num"></div>
+          <div>
+            <h3>Pick your one thing</h3>
+            <p>The layout nudges you to circle a single priority. Everything else gets a home, so you can stop re-remembering it.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num"></div>
+          <div>
+            <h3>Move through the day lighter</h3>
+            <p>Check back when you drift. The Invisible Journal holds the list so your working memory doesn't have to.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num"></div>
+          <div>
+            <h3>Reset each week</h3>
+            <p>A gentle weekly page helps you declutter what didn't matter and celebrate what you finished — dopamine included.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRODUCT / BUY ===================== -->
+  <section class="section" id="shop">
+    <div class="wrap">
+      <div class="product">
+        <div class="product-visual">
+          <div class="bookmark">
+            <small>The</small>
+            <span>Invisible</span>
+            <span>Journal</span>
+          </div>
+        </div>
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="kicker">The Invisible Journal — Original Edition</div>
+          <h2 class="big" style="font-size:2rem;">Everything your mind needs. Nothing it doesn't.</h2>
+
+          <div class="price-row">
+            <span class="price">$34</span>
+            <span class="price-old">$44</span>
+            <span class="price-tag">Launch price</span>
+          </div>
+
+          <ul class="checklist">
+            <li>90 undated guided pages — start any day, skip any day, guilt-free</li>
+            <li>Lay-flat binding &amp; fountain-pen-friendly paper</li>
+            <li>ADHD-informed layout: brain dump, one focus, gentle weekly reset</li>
+            <li>Calming, low-stimulation design — no cluttered spreads</li>
+            <li>Ribbon marker + sticker set to find your place fast</li>
+          </ul>
+
+          <a href="#" class="btn" style="width:100%; text-align:center;">Add to cart — $34</a>
+          <p style="margin-top:14px; font-size:.9rem;">Free shipping over $50 · 30-day calm-or-refund promise</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="section tint" id="reviews">
+    <div class="wrap center">
+      <div class="kicker">Real minds, real relief</div>
+      <h2 class="big">It's the first journal I've ever kept past a week.</h2>
+
+      <div class="grid cols-3">
+        <div class="card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"I stopped waking up at 3am with a running list. It's all on the page now, and my brain finally lets me sleep."</p>
+          <p class="who"><strong>Maya R.</strong> · diagnosed at 34</p>
+        </div>
+        <div class="card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"The 'one focus a day' thing sounds small. It changed how much I actually finish. Life-changing, honestly."</p>
+          <p class="who"><strong>Devon K.</strong> · freelancer &amp; dad</p>
+        </div>
+        <div class="card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Every other planner made me feel like a failure. This one meets me where I am. No shame, just space."</p>
+          <p class="who"><strong>Priya S.</strong> · student</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section" id="faq">
+    <div class="wrap center">
+      <div class="kicker">Good questions</div>
+      <h2 class="big">Everything you're wondering</h2>
+
+      <div class="faq" style="text-align:left;">
+        <details open>
+          <summary>Do I have to use it every day?</summary>
+          <p>Not at all — and that's the point. The pages are undated, so you can pick it up after a week away with zero guilt. It's built for how ADHD brains actually work, not how planners wish they did.</p>
+        </details>
+        <details>
+          <summary>How is this different from a normal journal or planner?</summary>
+          <p>Regular planners assume you already think in neat lists and stick to routines. The Invisible Journal is designed around executive-function challenges: it externalizes your working memory, limits choices to reduce overwhelm, and uses low-stimulation layouts so a page never feels like too much.</p>
+        </details>
+        <details>
+          <summary>Is it only for people with an ADHD diagnosis?</summary>
+          <p>Nope. If your mind races, you struggle with clutter, or you've never managed to stick with a journal, you'll feel right at home — diagnosis or not.</p>
+        </details>
+        <details>
+          <summary>What if it doesn't work for me?</summary>
+          <p>Try it for 30 days. If your mind doesn't feel a little lighter, email us for a full refund — keep the journal. We mean the calm-or-refund promise.</p>
+        </details>
+        <details>
+          <summary>How long does shipping take?</summary>
+          <p>Orders ship within 1–2 business days. Most domestic orders arrive in 3–6 days; international 7–14 days. Free shipping on orders over $50.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA BAND ===================== -->
+  <section class="section">
+    <div class="wrap">
+      <div class="cta-band">
+        <h2>Your mind deserves a place to rest.</h2>
+        <p>Join 2,000+ people who traded mental clutter for a little more calm — one gentle page at a time.</p>
+        <a href="#shop" class="btn">Get your Invisible Journal</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="wrap">
+      <div class="logo"><span class="logo-dot"></span> The Invisible Journal</div>
+      <p>A calmer page for the ADHD mind — declutter, focus, breathe.</p>
+      <div class="foot-links">
+        <a href="#how">How it works</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="#shop">Shop</a>
+      </div>
+      <p style="margin-top:18px; color:#9a9086; font-size:.8rem;">© 2026 The Invisible Journal. Made with care for busy minds.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
